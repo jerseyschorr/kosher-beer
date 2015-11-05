@@ -1,0 +1,27 @@
+{
+  "name": "kosher-beer",
+  "version": "0.1",
+  "description": "Kosher Beer List",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerseyschorr/kosher-beer.git"
+  },
+  "author": "Eric Schorr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jerseyschorr/kosher-beer/issues"
+  },
+  "homepage": "https://github.com/jerseyschorr/kosher-beer#readme",
+  "dependencies": {
+    "babel": "^5.8.23",
+    "eslint": "^1.6.0",
+    "grunt": "^0.4.5",
+    "grunt-eslint": "^17.2.0",
+    "babel-eslint": "^4.1.3",
+    "grunt-babel": "^5.0.3",
+    "csvtojson": "^0.4.5"
+  }
+}
