@@ -9,7 +9,7 @@ class BeerList {
         this.idx = 1;
     }
 
-    add(type, brand, product, hechsher='', status=1, misc="") {
+    add(type, brand, product, hechsher='', status=1, misc='') {
 
         const data = [brand, type, product, hechsher, status, misc];
         const work = [];
@@ -31,7 +31,6 @@ class BeerList {
             }
         }
         this.idx += 1;
-        //["Muller", "Yoghurt Drinks", "Vitality Strawberry", 2]
     }
 
     makeList() {

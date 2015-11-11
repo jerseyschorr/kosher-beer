@@ -10,8 +10,6 @@ class Beer {
 
         if (window.beerlist) {
 
-            // console.log('got it!');
-
             this.data = window.beerlist;
             this.bar.empty();
             $('footer').html(`<p>For personal use only.<br>Last Updated on ${window.beerlist.lastupdated}</p>`);
@@ -60,8 +58,6 @@ class Beer {
 
     searchdata() {
 
-        // console.log('searchdata?', this.data);
-        //const tbl = '';
         const stuff = {};
         const search = $('#srch').val().trim();
 
@@ -76,14 +72,11 @@ class Beer {
                 if (sp.length > 2) {
                     const re = new RegExp(`(\\w*${sp}\\w*)`, 'ig');
                     const itemKey = this.data.keylist.match(re);
-                    // console.log(itemKey);
 
                     let tmp = [];
                     for (const ref in itemKey) {
-                        // console.log('key', itemKey[ref]);
                         const itms = this.data.search[itemKey[ref]];
                         tmp = _.union(tmp, itms);
-                        // console.log('tmp>', tmp);
                     }
                     if (itemList.length === 0) {
                         itemList = tmp;
@@ -105,7 +98,6 @@ class Beer {
                         if (stuff.hasOwnProperty(s[1]) === false) {
                             stuff[s[1]] = [];
                         }
-                        console.log(s);
                         stuff[s[1]].push({
                             'id': itm,
                             'brand': s[0],
