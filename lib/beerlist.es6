@@ -9,23 +9,24 @@ class BeerList {
         this.idx = 1;
     }
 
-    add(type, brand, product, hechsher='', status=1) {
+    add(type, brand, product, hechsher='', status=1, misc="") {
 
-        const data = [brand, type, product, hechsher, status];
+        const data = [brand, type, product, hechsher, status, misc];
         const work = [];
         this.data.booze[this.idx] = data;
 
         for (let i = 0; i < data.length - 2; i += 1) {
-            console.log(data[i]);
             const strlist = data[i].toString().split(' ');
             for (let j = 0; j < strlist.length; j += 1) {
                 if (work.indexOf(strlist[j]) === -1) {
-                    const str = strlist[j].toLocaleUpperCase();
-                    work.push(str);
-                    if (!this.data.search.hasOwnProperty(str)) {
-                        this.data.search[str] = [];
+                    const str = strlist[j].toLocaleUpperCase().replace(/[^A-Z]/g, '');
+                    if (str.length > 2) {
+                        work.push(str);
+                        if (!this.data.search.hasOwnProperty(str)) {
+                            this.data.search[str] = [];
+                        }
+                        this.data.search[str].push(this.idx);
                     }
-                    this.data.search[str].push(this.idx);
                 }
             }
         }
@@ -59,7 +60,7 @@ if (window.beerdata) {
             ksr = '';
             status = 0;
         }
-        BL.add(ref.Type, ref.Brand, ref.Product, ksr, status);
+        BL.add(ref.Type, ref.Brand, ref.Product, ksr, status, ref.Misc);
     }
     // BL.add('800', 'Beer', 'Ice Beer', 'OU');
     // BL.add('Alexander', 'Beer', 'Assorted Varieties', 'Rabbi Eliezer Simcha Weisz');

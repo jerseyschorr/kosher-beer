@@ -14,7 +14,7 @@ body {
 
 .content {
 	margin: 0 0 0.3%;
-	padding: 0.3% 0;
+	padding: 0.3%;
 }
 
 input[type=text], input[type=url], input[type=email], input[type=password], input[type=tel] {
@@ -45,6 +45,7 @@ td {
 	margin: 0;
 	padding: 0 5px;
 	height: 28px;
+	line-height: 1.4em;
 }
 
 td.fade {
@@ -53,11 +54,15 @@ td.fade {
 
 .ksrimg {
 	vertical-align: bottom;
-	padding: 0 36px;
 }
 
-.tdimg {
+.ksr {
 	text-align: center;
+}
+
+.xsml {
+	font-size: 0.75em;
+	line-height: 1.0em;
 }
 
 /*
@@ -120,6 +125,7 @@ p {
 
 .nk {
 	color: #aaa;
+	font-style: italic;
 }
 
 .hasmisc td {

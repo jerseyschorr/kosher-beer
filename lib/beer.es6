@@ -10,7 +10,7 @@ class Beer {
 
         if (window.beerlist) {
 
-            console.log('got it!');
+            // console.log('got it!');
 
             this.data = window.beerlist;
             this.bar.empty();
@@ -60,7 +60,7 @@ class Beer {
 
     searchdata() {
 
-        console.log('searchdata?', this.data);
+        // console.log('searchdata?', this.data);
         //const tbl = '';
         const stuff = {};
         const search = $('#srch').val().trim();
@@ -76,14 +76,14 @@ class Beer {
                 if (sp.length > 2) {
                     const re = new RegExp(`(\\w*${sp}\\w*)`, 'ig');
                     const itemKey = this.data.keylist.match(re);
-                    console.log(itemKey);
+                    // console.log(itemKey);
 
                     let tmp = [];
                     for (const ref in itemKey) {
-                        console.log('key', itemKey[ref]);
+                        // console.log('key', itemKey[ref]);
                         const itms = this.data.search[itemKey[ref]];
                         tmp = _.union(tmp, itms);
-                        console.log('tmp>', tmp);
+                        // console.log('tmp>', tmp);
                     }
                     if (itemList.length === 0) {
                         itemList = tmp;
@@ -105,12 +105,14 @@ class Beer {
                         if (stuff.hasOwnProperty(s[1]) === false) {
                             stuff[s[1]] = [];
                         }
+                        console.log(s);
                         stuff[s[1]].push({
                             'id': itm,
                             'brand': s[0],
                             'prod': s[2],
                             'ksr': s[3],
-                            'stat': s[4]
+                            'stat': s[4],
+                            'misc': s[5]
                         });
                     }
                 }
@@ -132,33 +134,41 @@ class Beer {
                     }
                     if ($(`#${u.id}`).length === 0) {
                         tbl = `<tr id="${u.id}"`;
-                        // if (u.misc) {
-                        //     tbl += ' class="hasmisc"';
-                        // }
+                        if (u.misc) {
+                            tbl += ' class="hasmisc"';
+                        }
                         tbl += `><td>${u.brand}</td><td>${u.prod}</td>`;
 
                         if (u.stat === 0) {
-                            tbl += '<td colspan="2">Not Kosher</td>';
+                            tbl += '<td class="ksr xsml">Not Kosher</td>';
                         }
                         else {
                             if (noLabel === true) {
-                                tbl += '<td class="fade">';
+                                tbl += '<td class="ksr fade">';
+                            }
+                            else if (u.ksr === 'Rabbi Eliezer Simcha Weisz') {
+                                tbl += '<td class="ksr xsml">';
                             }
                             else {
-                                tbl += '<td>';
+                                tbl += '<td class="ksr">';
                             }
+
                             if (u.ksr === 'OU') {
-                                tbl += '<img src="ou.png" height="24" width="24" alt="Orthodox Union" />';
+                                tbl += '<img class="ksrimg" src="img/ou.png" height="24" width="24" alt="Orthodox Union" />';
+                            }
+                            else if (u.ksr === 'KLBD') {
+                                tbl += '<img class="ksrimg" src="img/klbd.png" height="24" width="33" alt="London Beit Din" />';
                             }
                             else {
                                 tbl += u.ksr;
                             }
+
                             tbl += '</td>';
                         }
                         tbl += '</tr>';
-                        // if (u.misc) {
-                        //     tbl += `<tr class="misc"><td></td><td colspan="3">${u.misc}</td></tr>`;
-                        // }
+                        if (u.misc) {
+                            tbl += `<tr class="misc"><td></td><td colspan="3">${u.misc}</td></tr>`;
+                        }
                         this.food.append(tbl).fadeIn();
                          const $tr = $(`#${u.id}`);
                         if (u.stat === 0) {
