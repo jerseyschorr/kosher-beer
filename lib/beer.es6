@@ -7,6 +7,34 @@ class Beer {
         this.bar = $('#bar');
         this.bar.html('<h2>Loading...</h2>');
         this.food = $('#food');
+        this.symbols = {
+            'Rabbi Eliezer Simcha Weisz': {
+                'type': 'text'
+            },
+            'Rabbi Eliyahu (Israel)': {
+                'type': 'text'
+            },
+            'OU': {
+                'img':'ou',
+                'width':24
+            },
+            'KLBD': {
+                'img':'klbd',
+                'width':33
+            },
+            'Star-K': {
+                'img':'Star-K',
+                'width':25
+            },
+            'cRc': {
+                'img':'crc',
+                'width':25
+            },
+            'Vaad of Kansas City': {
+                'img':'kansas-city',
+                'width':27
+            }
+        };
 
         if (window.beerlist) {
 
@@ -34,30 +62,13 @@ class Beer {
             return this.data.search[searchStr];
         }
         return null;
-        /*
-        const searchtxtLength = this.data.searchtxt.length;
-        let startIndex = 0;
-        let indices = [];
-        let keepLooking = true;
+    }
 
-        // Find Search Text
-        while (keepLooking) {
-            const index = this.data.searchtxt.indexOf(searchStr, startIndex);
-            if (index === -1 || startIndex >= searchtxtLength) {
-                keepLooking = false;
-            }
-            else {
-                const startitems = this.data.searchtxt.indexOf(':', index + 1);
-                let enditems   = this.data.searchtxt.indexOf('|', startitems + 2);
-                if (enditems === -1) {
-                    enditems = searchtxtLength;
-                }
-                indices = indices.concat(this.data.searchtxt.substring(startitems + 1, enditems).split(','));
-                startIndex = enditems + 1;
-            }
+    getKosherInfo(ksr) {
+        if (this.symbols[ksr]) {
+            return this.symbols[ksr];
         }
-        return indices;
-        */
+        return null;
     }
 
     searchdata() {
@@ -133,62 +144,41 @@ class Beer {
                         if (u.misc) {
                             tbl += ' class="hasmisc"';
                         }
-                        tbl += `><td>${u.brand}</td><td>${u.prod}</td>`;
+                        tbl += `><td>${u.brand}</td><td>${u.prod}</td><td class="ksr`;
 
+                        const ksrinfo = this.getKosherInfo(u.ksr);
+
+                        if (u.stat === 0 || (ksrinfo !== null && ksrinfo.type === 'text')) {
+                            tbl += ' xsml';
+                        }
+
+                        if (u.stat === 1 && noLabel) {
+                            tbl += ' fade';
+                        }
+
+                        tbl += '">';
                         if (u.stat === 0) {
-                            tbl += '<td class="ksr xsml">Not Kosher</td>';
+                            tbl += 'Not Kosher';
+                        }
+                        else if (ksrinfo !== null && ksrinfo.img) {
+                            tbl += `<img class="ksrimg" src="img/${ksrinfo.img}.png" height="24" width="${ksrinfo.width}" alt="${u.ksr}" />`;
                         }
                         else {
-                            if (noLabel === true) {
-                                tbl += '<td class="ksr fade">';
-                            }
-                            else if (u.ksr === 'Rabbi Eliezer Simcha Weisz' ||
-                                     u.ksr === 'Rabbi Eliyahu (Israel)') {
-                                tbl += '<td class="ksr xsml">';
-                            }
-                            else {
-                                tbl += '<td class="ksr">';
-                            }
-
-                            if (u.ksr === 'OU') {
-                                tbl += '<img class="ksrimg" src="img/ou.png" height="24" width="24" alt="Orthodox Union" />';
-                            }
-                            else if (u.ksr === 'KLBD') {
-                                tbl += '<img class="ksrimg" src="img/klbd.png" height="24" width="33" alt="London Beit Din" />';
-                            }
-                            else if (u.ksr === 'Star-K') {
-                                tbl += '<img class="ksrimg" src="img/Star-K.png" height="24" width="25" alt="Star-K" />';
-                            }
-                            else if (u.ksr === 'cRc') {
-                                tbl += '<img class="ksrimg" src="img/crc.png" height="24" width="25" alt="cRc" />';
-                            }
-                            else if (u.ksr === 'Vaad of Kansas City') {
-                                tbl += '<img class="ksrimg" src="img/kansas-city.png" height="24" width="27" alt="Vaad of Kansas City" />';
-                            }
-                            else {
-                                tbl += u.ksr;
-                            }
-
-                            tbl += '</td>';
+                            tbl += u.ksr;
                         }
-                        tbl += '</tr>';
+
+                        tbl += '</td></tr>';
+
                         if (u.misc) {
-                            tbl += `<tr class="misc"><td></td><td colspan="3">${u.misc}</td></tr>`;
+                            tbl += `<tr class="misc"><td colspan="3">${u.misc}</td></tr>`;
                         }
+
                         this.food.append(tbl).fadeIn();
-                         const $tr = $(`#${u.id}`);
+                        const $tr = $(`#${u.id}`);
+
                         if (u.stat === 0) {
                              $tr.addClass('nk');
                         }
-                        // else if ((u.stat & 1) === 1) {
-                        //     $tr.addClass('parve');
-                        // }
-                        // else if ((u.stat & 2) === 2) {
-                        //     $tr.addClass('dairy');
-                        // }
-                        // else if ((u.stat & 4) === 4) {
-                        //     $tr.addClass('meat');
-                        // }
 
                     }
                 }
