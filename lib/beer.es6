@@ -24,6 +24,10 @@ class Beer {
         }
     }
 
+    sortNumber(a, b) {
+       return a - b;
+    }
+
     getIndicesOf(searchStr) {
 
         if (this.data.search.hasOwnProperty(searchStr)) {
@@ -86,10 +90,10 @@ class Beer {
                     }
                 }
             }
-            // itemList = _.uniq(itemList);
         }
 
         if (itemList && itemList.length > 0) {
+            itemList.sort(this.sortNumber);
             for (const ref in itemList) {
                 const itm = itemList[ref];
                 if ($(`#${itm}`).length === 0) {
@@ -150,6 +154,9 @@ class Beer {
                             }
                             else if (u.ksr === 'KLBD') {
                                 tbl += '<img class="ksrimg" src="img/klbd.png" height="24" width="33" alt="London Beit Din" />';
+                            }
+                            else if (u.ksr === 'Star-K') {
+                                tbl += '<img class="ksrimg" src="img/Star-K.png" height="24" width="25" alt="Star-K" />';
                             }
                             else {
                                 tbl += u.ksr;
