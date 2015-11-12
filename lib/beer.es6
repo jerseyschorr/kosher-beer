@@ -142,7 +142,8 @@ class Beer {
                             if (noLabel === true) {
                                 tbl += '<td class="ksr fade">';
                             }
-                            else if (u.ksr === 'Rabbi Eliezer Simcha Weisz') {
+                            else if (u.ksr === 'Rabbi Eliezer Simcha Weisz' ||
+                                     u.ksr === 'Rabbi Eliyahu (Israel)') {
                                 tbl += '<td class="ksr xsml">';
                             }
                             else {
@@ -157,6 +158,12 @@ class Beer {
                             }
                             else if (u.ksr === 'Star-K') {
                                 tbl += '<img class="ksrimg" src="img/Star-K.png" height="24" width="25" alt="Star-K" />';
+                            }
+                            else if (u.ksr === 'cRc') {
+                                tbl += '<img class="ksrimg" src="img/crc.png" height="24" width="25" alt="cRc" />';
+                            }
+                            else if (u.ksr === 'Vaad of Kansas City') {
+                                tbl += '<img class="ksrimg" src="img/kansas-city.png" height="24" width="27" alt="Vaad of Kansas City" />';
                             }
                             else {
                                 tbl += u.ksr;
